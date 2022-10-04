@@ -2,6 +2,7 @@ package com.epam.mjc;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.ArrayList;
 
 public class StringSplitter {
 
