@@ -14,6 +14,8 @@ public class StringSplitter {
      */
     public List<String> splitByDelimiters(String source, Collection<String> delimiters) {
         //throw new UnsupportedOperationException("You should implement this method.");
-        return new ArrayList<>();
+        List<String> list = new ArrayList<>();
+
+        return list;
     }
 }
