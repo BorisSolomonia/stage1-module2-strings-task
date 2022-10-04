@@ -23,6 +23,7 @@ public class MethodParser {
      * @return {@link MethodSignature} object filled with parsed values from source string
      */
     public MethodSignature parseFunction(String signatureString) {
+        List<String> firstArgs = new ArrayList<>();
         String[] firstSplit = signatureString.split("[(]");
         StringBuilder stringBuilder = new StringBuilder(firstSplit[1]);
         stringBuilder.delete(stringBuilder.length()-1,stringBuilder.length());
@@ -30,21 +31,30 @@ public class MethodParser {
         firstSplit[1] = String.valueOf(stringBuilder);
         String[] secondSplit = firstSplit[0].split(" ");
         String[] thirdSplit = firstSplit[1].split(", ");
+        for (String k : thirdSplit) {
+            String[] n = k.split(" ");
+            firstArgs.add(n[0]);
+            firstArgs.add(n[1]);
+        }
         List<MethodSignature.Argument> args = new ArrayList<>();
-        for (int i = 0; i < thirdSplit.length; i++) {
+        for (int i = 0; i < firstArgs.size()-1; i++) {
             String type = "";
             String ar = "";
             if(i%2 == 0){
-                type = thirdSplit[i];
-            }else {
-                ar = thirdSplit[i];
+                type = firstArgs.get(i);
+                ar = firstArgs.get(i+1);
+
+                args.add(new MethodSignature.Argument(type, ar));
             }
-            args.add(new MethodSignature.Argument(type, ar));
         }
 
         MethodSignature methodSignature = new MethodSignature(secondSplit[secondSplit.length-1],args);
         methodSignature.setReturnType(secondSplit[secondSplit.length-2]);
-        methodSignature.setAccessModifier(secondSplit[0]);
+        if (secondSplit.length == 3) {
+            methodSignature.setAccessModifier(secondSplit[0]);
+        } else {
+            methodSignature.setAccessModifier(null);
+        }
         //throw new UnsupportedOperationException("You should implement this method.");
         //System.out.println(methodSignature.getMethodName() + " " + methodSignature.getAccessModifier() + " " + methodSignature.getReturnType());
         return methodSignature;
