@@ -16,6 +16,6 @@ public class StringSplitter {
         //throw new UnsupportedOperationException("You should implement this method.");
         List<String> list = new ArrayList<>();
 
-        return list;
+        return null;
     }
 }
